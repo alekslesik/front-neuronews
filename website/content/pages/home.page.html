@@ -1,0 +1,491 @@
+{{template "base" .}}
+
+{{define "title"}}NeuroNews - Home{{end}}
+
+{{define "main"}}
+
+{{template "carousel" .}}
+
+<!-- type Article struct {
+	ArticleID   int
+	Title       string
+	PreviewText string
+	ImagePath       string
+	ArticleTime time.Time
+	Tag         string
+	DetailText  string
+	Href        string
+  Comments    int
+	Category    string
+	VideoPath				string
+} -->
+
+<!-- TRENDING ARTICLES -->
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="section-title">
+					<h2 class="title">В тренде</h2>
+					<!-- TODO category -->
+					<!-- <ul class="tab-nav pull-right">
+						<li class="active"><a data-toggle="tab" href="#tab1">Всё</a></li>
+						<li><a data-toggle="tab" href="#tab1">Новости</a></li>
+						<li><a data-toggle="tab" href="#tab1">Спорт</a></li>
+						<li><a data-toggle="tab" href="#tab1">Музыка</a></li>
+						<li><a data-toggle="tab" href="#tab1">Бизнес</a></li>
+						<li><a data-toggle="tab" href="#tab1">Стиль жизни</a></li>
+					</ul> -->
+				</div>
+				<div class="tab-content">
+					<div id="tab1" class="tab-pane fade in active">
+						<!-- Trending Articles Top big 4 articles -->
+						<div class="row">
+							<!-- ARTICLES -->
+							{{range .TemplateDataArticle.TrendingArticlesTop}}
+							<div class="col-md-3 col-sm-6">
+								<article class="article">
+									<div class="article-img">
+										<a href="/news/{{.Category}}/{{.Href}}/">
+											<img src="{{.ImagePath}}" alt="{{.Title}}">
+										</a>
+										<ul class="article-info">
+											<li class="article-type"><i class="fa fa-camera"></i></li>
+										</ul>
+									</div>
+									<div class="article-body">
+										<h4 class="article-title"><a href="/news/{{.Category}}/{{.Href}}/">{{ .Title }}</a></h4>
+										<ul class="article-meta">
+											<li><i class="fa fa-clock-o"></i> {{humanDate .ArticleTime}}</li>
+											<li><i class="fa fa-comments"></i> {{.Comments}}</li>
+										</ul>
+									</div>
+								</article>
+							</div>
+							{{end}}
+							<!-- /ARTICLES -->
+						</div>
+
+						<!-- Trending Articles Bottom small 6 articles -->
+						<div class="row">
+							<!-- First column -->
+							<div class="col-md-4 col-sm-6">
+								{{ $firstColumn := slice .TemplateDataArticle.TrendingArticlesBottom 0 2 }}
+								<!-- ARTICLES -->
+								{{ range $firstColumn}}
+								<article class="article widget-article">
+									<div class="article-img">
+										<a href="/news/{{.Category}}/{{.Href}}/">
+											<img src="{{.ImagePath}}" alt="{{.Title}}">
+										</a>
+									</div>
+									<div class="article-body">
+										<h4 class="article-title"><a href="/news/{{.Category}}/{{.Href}}/">{{.Title}}</a></h4>
+										<ul class="article-meta">
+											<li><i class="fa fa-clock-o"></i> {{humanDate .ArticleTime}}</li>
+											<li><i class="fa fa-comments"></i>{{.Comments}}</li>
+										</ul>
+									</div>
+								</article>
+								{{ end }}
+								<!-- /ARTICLES -->
+							</div>
+
+							<!-- Second column -->
+							<div class="col-md-4 col-sm-6">
+								{{ $secondColumn := slice .TemplateDataArticle.TrendingArticlesBottom 3 5 }}
+								<!-- ARTICLE -->
+								{{ range $secondColumn}}
+								<article class="article widget-article">
+									<div class="article-img">
+										<a href="/news/{{.Category}}/{{.Href}}/">
+											<img src="{{.ImagePath}}" alt="{{.Title}}">
+										</a>
+									</div>
+									<div class="article-body">
+										<h4 class="article-title"><a href="/news/{{.Category}}/{{.Href}}/">{{.Title}}</a></h4>
+										<ul class="article-meta">
+											<li><i class="fa fa-clock-o"></i> {{humanDate .ArticleTime}}</li>
+											<li><i class="fa fa-comments"></i>{{.Comments}}</li>
+										</ul>
+									</div>
+								</article>
+								{{ end }}
+								<!-- /ARTICLE -->
+							</div>
+
+							<!-- Third column -->
+							<div class="col-md-4 hidden-sm">
+								{{ $thirdColumn := slice .TemplateDataArticle.TrendingArticlesBottom 5 7 }}
+								<!-- ARTICLE -->
+								{{ range $thirdColumn}}
+								<article class="article widget-article">
+									<div class="article-img">
+										<a href="/news/{{.Category}}/{{.Href}}/">
+											<img src="{{.ImagePath}}" alt="{{.Title}}">
+										</a>
+									</div>
+									<div class="article-body">
+										<h4 class="article-title"><a href="/news/{{.Category}}/{{.Href}}/">{{.Title}}</a></h4>
+										<ul class="article-meta">
+											<li><i class="fa fa-clock-o"></i> {{humanDate .ArticleTime}}</li>
+											<li><i class="fa fa-comments"></i>{{.Comments}}</li>
+										</ul>
+									</div>
+								</article>
+								{{ end }}
+								<!-- /ARTICLE -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /TRENDING ARTICLES -->
+
+<!-- NEWS SPORT ARTICLES -->
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="row">
+					<!-- NEWS -->
+					<div class="col-md-6 col-sm-6">
+						<div class="section-title">
+							<h2 class="title">Новости</h2>
+						</div>
+						<!-- FIRST ARTICLE -->
+						{{with $firstNewsArticle := index .TemplateDataArticle.NewsArticles 0}}
+						<article class="article">
+							<div class="article-img">
+								<a href="/news/{{$firstNewsArticle.Category}}/{{$firstNewsArticle.Href}}/">
+									<img src="{{$firstNewsArticle.ImagePath}}" alt="{{$firstNewsArticle.Title}}">
+								</a>
+								<ul class="article-info">
+									<li class="article-type"><i class="fa fa-camera"></i></li>
+								</ul>
+							</div>
+							<div class="article-body">
+								<h3 class="article-title"><a
+										href="/news/{{$firstNewsArticle.Category}}/{{$firstNewsArticle.Href}}/"></a>{{.Title}}"</h3>
+								<ul class="article-meta">
+									<li><i class="fa fa-clock-o"></i>{{ humanDate $firstNewsArticle.ArticleTime}}</li>
+									<li><i class="fa fa-comments"></i>{{$firstNewsArticle.Comments}}</li>
+								</ul>
+								<p>{{$firstNewsArticle.PreviewText}}</p>
+							</div>
+						</article>
+						{{end}}
+						<!-- /FIRST ARTICLE -->
+
+						<!-- ARTICLES -->
+						{{range $index, $element := .TemplateDataArticle.NewsArticles}}
+						{{if gt $index 0}}
+						<article class="article widget-article">
+							<div class="article-img">
+								<a href="/news/{{.Category}}/{{.Href}}/">
+									<img src="{{.ImagePath}}" alt="{{.Title}}">
+								</a>
+							</div>
+							<div class="article-body">
+								<h4 class="article-title"><a href="/news/{{.Category}}/{{.Href}}/">{{.Title}}</a></h4>
+								<ul class="article-meta">
+									<li><i class="fa fa-clock-o"></i> {{humanDate .ArticleTime}}</li>
+									<li><i class="fa fa-comments"></i>{{.Comments}}</li>
+								</ul>
+							</div>
+						</article>
+						{{end}}
+						{{end}}
+						<!-- /ARTICLES -->
+
+					</div>
+					<!-- /NEWS -->
+
+					<!-- SPORT -->
+					<div class="col-md-6 col-sm-6">
+						<div class="section-title">
+							<h2 class="title">Спорт</h2>
+						</div>
+
+						<!-- FIRST ARTICLE -->
+						{{with $firstSportArticle := index .TemplateDataArticle.SportArticles 0}}
+						<article class="article">
+							<div class="article-img">
+								<a href="/news/{{$firstSportArticle.Category}}/{{$firstSportArticle.Href}}/">
+									<img src="{{$firstSportArticle.ImagePath}}" alt="{{$firstSportArticle.Title}}">
+								</a>
+								<ul class="article-info">
+									<li class="article-type"><i class="fa fa-camera"></i></li>
+								</ul>
+							</div>
+							<div class="article-body">
+								<h3 class="article-title"><a
+										href="/news/{{$firstSportArticle.Category}}/{{$firstSportArticle.Href}}/"></a>{{.Title}}"</h3>
+								<ul class="article-meta">
+									<li><i class="fa fa-clock-o"></i>{{ humanDate $firstSportArticle.ArticleTime}}</li>
+									<li><i class="fa fa-comments"></i>{{$firstSportArticle.Comments}}</li>
+								</ul>
+								<p>{{$firstSportArticle.PreviewText}}</p>
+							</div>
+						</article>
+						{{end}}
+						<!-- /FIRST ARTICLE -->
+
+						<!-- ARTICLES -->
+						{{range $index, $element := .TemplateDataArticle.SportArticles}}
+						{{if gt $index 0}}
+						<article class="article widget-article">
+							<div class="article-img">
+								<a href="/news/{{.Category}}/{{.Href}}/">
+									<img src="{{.ImagePath}}" alt="{{.Title}}">
+								</a>
+							</div>
+							<div class="article-body">
+								<h4 class="article-title"><a href="/news/{{.Category}}/{{.Href}}/">{{.Title}}</a></h4>
+								<ul class="article-meta">
+									<li><i class="fa fa-clock-o"></i> {{humanDate .ArticleTime}}</li>
+									<li><i class="fa fa-comments"></i>{{.Comments}}</li>
+								</ul>
+							</div>
+						</article>
+						{{end}}
+						{{end}}
+						<!-- /ARTICLES -->
+					</div>
+					<!-- /SPORT -->
+				</div>
+			</div>
+			<!-- /Main Column -->
+
+			<!-- Aside Column -->
+			<!-- <div class="col-md-4"> -->
+			<!-- Ad widget -->
+			<!-- <div class="widget center-block hidden-xs">
+					<img class="center-block" src="/static/img/ad-1.jpg" alt="">
+				</div> -->
+			<!-- /Ad widget -->
+
+			<!-- social widget -->
+			<!-- TODO social -->
+			<!-- <div class="widget social-widget">
+					<div class="widget-title">
+						<h2 class="title">Stay Connected</h2>
+					</div>
+					<ul>
+						<li><a href="#" class="facebook"><i class="fa fa-facebook"></i><br><span>Facebook</span></a></li>
+						<li><a href="#" class="twitter"><i class="fa fa-twitter"></i><br><span>Twitter</span></a></li>
+						<li><a href="#" class="google"><i class="fa fa-google"></i><br><span>Google+</span></a></li>
+						<li><a href="#" class="instagram"><i class="fa fa-instagram"></i><br><span>Instagram</span></a></li>
+						<li><a href="#" class="youtube"><i class="fa fa-youtube"></i><br><span>Youtube</span></a></li>
+						<li><a href="#" class="rss"><i class="fa fa-rss"></i><br><span>RSS</span></a></li>
+					</ul>
+				</div> -->
+			<!-- /social widget -->
+
+			<!-- subscribe widget -->
+			<!-- TODO -->
+			<!-- <div class="widget subscribe-widget">
+					<div class="widget-title">
+						<h2 class="title">Оформить подписку</h2>
+					</div>
+					<form>
+						<input class="input" type="email" placeholder="email">
+						<button class="input-btn">Подписаться</button>
+					</form>
+				</div> -->
+			<!-- /subscribe widget -->
+			<!-- </div> -->
+			<!-- /Aside Column -->
+		</div>
+	</div>
+</div>
+<!-- /NEWS SPORT ARTICLES -->
+
+<!-- AD ARTICLES -->
+<div class="visible-lg visible-md">
+	<img class="center-block" src="/static/img/ad-3.jpg" alt="">
+</div>
+<!-- /AD ARTICLES -->
+
+<!-- VIDEO ARTICLES -->
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- section title -->
+				<div class="section-title">
+					<h2 class="title">Популярные видео</h2>
+					<div id="nav-carousel-2" class="custom-owl-nav pull-right"></div>
+				</div>
+				<!-- /section title -->
+				<!-- owl carousel 2 -->
+				<div id="owl-carousel-2" class="owl-carousel owl-theme">
+					<!-- ARTICLES -->
+					{{range .TemplateDataArticle.VideoArticles}}
+					<article class="article thumb-article">
+						<div class="article-img">
+							<video width="370" height="370" autoplay muted loop>
+								<source src="{{.VideoPath}}" type="video/mp4">
+								Ваш браузер не поддерживает видео тег.
+							</video>
+						</div>
+						<div class="article-body">
+							<ul class="article-info">
+								<li class="article-category"><a href="/news/{{.Category}}">News</a></li>
+								<li class="article-type"><i class="fa fa-video-camera"></i></li>
+							</ul>
+							<h3 class="article-title"><a href="/news/{{.Href}}">{{.Title}}</a></h3>
+							<ul class="article-meta">
+								<li><i class="fa fa-clock-o"></i> {{humanDate .ArticleTime}}</li>
+								<li><i class="fa fa-comments"></i>{{.Comments}}</li>
+							</ul>
+						</div>
+					</article>
+					{{end}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /VIDEO ARTICLES -->
+
+<!-- ALL ARTICLES -->
+<div class="section" id="news">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<!-- section title -->
+				<div class="section-title">
+					<h2 class="title">Все новости</h2>
+				</div>
+				<!-- /section title -->
+				<!-- ARTICLES -->
+				{{range .TemplateDataArticle.PaginationArticles}}
+				<article class="article row-article">
+					<div class="article-img">
+						<a href="/news/{{.Category}}/{{.Href}}/">
+							<img src="{{.ImagePath}}" alt="">
+						</a>
+					</div>
+					<div class="article-body">
+						<ul class="article-info">
+							<li class="article-category"><a href="/news/{{.Category}}/">{{.Tag}}</a></li>
+							<li class="article-type"><i class="fa fa-file-text"></i></li>
+						</ul>
+						<h3 class="article-title"><a href="/news/{{.Category}}/{{.Href}}/">{{.Title}}</a></h3>
+						<ul class="article-meta">
+							<li><i class="fa fa-clock-o"></i> {{humanDate .ArticleTime}}</li>
+							<li><i class="fa fa-comments"></i>{{.Comments}}</li>
+						</ul>
+						<p>{{.PreviewText}}</p>
+					</div>
+				</article>
+				{{end}}
+				<!-- /ARTICLES -->
+
+				<!-- pagination -->
+				{{generatePaginationHTML .TemplateDataPage.TotalPaginationPages .TemplateDataPage.CurrentPaginationPage ""}}
+				<!-- /pagination -->
+
+			</div>
+			<!-- /Main Column -->
+
+			<!-- Aside Column -->
+			<div class="col-md-4 fixedDiv" id="">
+				<!-- article widget -->
+				<div class="widget">
+					<div class="widget-title">
+						<h2 class="title">Избранные статьи</h2>
+					</div>
+
+					<!-- owl carousel 4 -->
+					<div id="owl-carousel-4" class="owl-carousel owl-theme">
+						<!-- ARTICLE -->
+						{{range .TemplateDataArticle.RandomArticles}}
+						<article class="article thumb-article">
+							<div class="article-img">
+								<img src="{{.ImagePath}}" alt="{{.Title}}">
+							</div>
+							<div class="article-body">
+								<ul class="article-info">
+									<li class="article-category"><a href="/news/{{.Category}}/">{{.Tag}}</a></li>
+									<li class="article-type"><i class="fa fa-camera"></i></li>
+								</ul>
+								<h2 class="article-title"><a href="/news/{{.Category}}/{{.Href}}/">{{.Title}}</a></h2>
+								<ul class="article-meta">
+									<li><i class="fa fa-clock-o"></i> {{humanDate .ArticleTime}}</li>
+									<li><i class="fa fa-comments"></i> {{.Comments}}</li>
+								</ul>
+							</div>
+						</article>
+						{{end}}
+						<!-- /ARTICLES -->
+					</div>
+					<!-- /owl carousel 4 -->
+				</div>
+				<!-- /article widget -->
+
+				<!-- Ad widget -->
+				<div class="widget center-block hidden-xs">
+					<img class="center-block" src="/static/img/ad-1.jpg" alt="">
+				</div>
+				<!-- /Ad widget -->
+
+				<!-- galery widget -->
+				<div class="widget galery-widget">
+					<div class="widget-title">
+						<h2 class="title">Фотогалерея</h2>
+					</div>
+					<ul>
+						{{range .TemplateDataImages.RandomImages}}
+						<li><a href="#"><img src="{{.ImagePath}}" alt="{{.Alt}}"></a></li>
+						{{end}}
+					</ul>
+				</div>
+
+
+				<!-- /galery widget -->
+
+				<!-- tweets widget -->
+				<!-- TODO -->
+				<!-- <div class="widget tweets-widget">
+					<div class="widget-title">
+						<h2 class="title">Недавние твитты</h2>
+					</div>
+					<ul>
+						<li class="tweet">
+							<i class="fa fa-twitter"></i>
+							<div class="tweet-body">
+								<p><a href="#">@magnews</a> Populo tritani laboramus ex mei, no eum iuvaret ceteros euripidis <a
+										href="#">https://t.co/DwsTbsmxTP</a></p>
+							</div>
+						</li>
+						<li class="tweet">
+							<i class="fa fa-twitter"></i>
+							<div class="tweet-body">
+								<p><a href="#">@magnews</a> Populo tritani laboramus ex mei, no eum iuvaret ceteros euripidis <a
+										href="#">https://t.co/DwsTbsmxTP</a></p>
+							</div>
+						</li>
+						<li class="tweet">
+							<i class="fa fa-twitter"></i>
+							<div class="tweet-body">
+								<p><a href="#">@magnews</a> Populo tritani laboramus ex mei, no eum iuvaret ceteros euripidis <a
+										href="#">https://t.co/DwsTbsmxTP</a></p>
+							</div>
+						</li>
+					</ul>
+				</div> -->
+				<!-- /tweets widget -->
+			</div>
+			<!-- /Aside Column -->
+		</div>
+	</div>
+</div>
+<!-- /ALL ARTICLES -->
+
+<!-- /FOOTER -->
+{{end}}

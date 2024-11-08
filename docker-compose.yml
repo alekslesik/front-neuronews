@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./deployments/web/dockerfile
+    container_name: neuronews-web
+    image: alekslesik/neuronews-web:latest
+    restart: always
+    ports:
+      - "443:443"
+    depends_on:
+      - mysql
+    volumes:
+      - ./website:/var/www/website
+    networks:
+      - neuronews-net
+
+  mysql:
+    build:
+      context: .
+      dockerfile: ./deployments/mysql/dockerfile
+    image: alekslesik/neuronews-mysql:latest
+    container_name: neuronews-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: neuronews
+      MYSQL_USER: neuronews
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - neuronews-net
+
+networks:
+  neuronews-net:
+    driver: bridge
+
+volumes:
+  mysql_data:
+
+

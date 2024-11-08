@@ -1,0 +1,5 @@
+FROM mysql:8.0.36-debian
+
+# Копирование SQL-скриптов для инициализации базы данных
+# copy scripts for db initialisation
+COPY ./migrations/ /docker-entrypoint-initdb.d/

@@ -1,0 +1,26 @@
+
+FROM golang:1.22 as builder
+
+WORKDIR /app
+COPY . .
+
+# Download dependences
+RUN go mod download
+
+# Comlile app to bin file
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o neuro-news ./cmd/neuro-news
+
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+
+WORKDIR /var/www
+
+# Copy build from previous step
+COPY --from=builder /app/neuro-news .
+
+COPY --from=builder /app/website ./website
+COPY --from=builder /app/configs_prod ./configs
+COPY --from=builder /app/tls ./tls
+
+# Define command for luanch application
+CMD ["./neuro-news"]

@@ -1,0 +1,186 @@
+{{template "base" .}}
+
+{{define "title"}}NeuroNews - News{{end}}
+
+{{define "main"}}
+
+<!-- type Article struct {
+	ArticleID   int
+	Title       string
+	PreviewText string
+	ImagePath       string
+	ArticleTime time.Time
+	Tag         string
+	DetailText  string
+	Href        string
+  Comments    int
+	Category    string
+	VideoPath				string
+} -->
+
+<!-- ALL ARTICLES -->
+<div class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <!-- section title -->
+        <div class="section-title">
+          <h2 class="title">Все новости</h2>
+        </div>
+        <!-- /section title -->
+        <!-- ARTICLES -->
+        {{range .TemplateDataArticle.PaginationArticles}}
+        <article class="article row-article">
+
+          <div class="article-img">
+            <a href="/news/{{.Category}}/{{.Href}}/">
+              <img src="{{.ImagePath}}" alt="">
+            </a>
+          </div>
+          <div class="article-body">
+            <ul class="article-info">
+              <li class="article-category"><a href="/news/{{.Category}}/">{{.Tag}}</a></li>
+              <li class="article-type"><i class="fa fa-file-text"></i></li>
+            </ul>
+            <h3 class="article-title"><a href="/news/{{.Category}}/{{.Href}}/">{{.Title}}</a></h3>
+            <ul class="article-meta">
+              <li><i class="fa fa-clock-o"></i> {{humanDate .ArticleTime}}</li>
+              <li><i class="fa fa-comments"></i>{{.Comments}}</li>
+            </ul>
+            <p>{{.PreviewText}}</p>
+          </div>
+        </article>
+        {{end}}
+        <!-- /ARTICLES -->
+
+        <!-- pagination -->
+        {{generatePaginationHTML .TemplateDataPage.TotalPaginationPages .TemplateDataPage.CurrentPaginationPage
+        .TemplateDataPage.Category}}
+        <!-- /pagination -->
+
+      </div>
+      <!-- /Main Column -->
+
+      <!-- Aside Column -->
+      <div class="col-md-4">
+        <!-- article widget -->
+        <div class="widget">
+          <!-- /Ad widget -->
+
+          <!-- social widget -->
+          <!-- TODO social -->
+          <!-- <div class="widget social-widget">
+            <div class="widget-title">
+              <h2 class="title">Stay Connected</h2>
+            </div>
+            <ul>
+              <li><a href="#" class="facebook"><i class="fa fa-facebook"></i><br><span>Facebook</span></a></li>
+              <li><a href="#" class="twitter"><i class="fa fa-twitter"></i><br><span>Twitter</span></a></li>
+              <li><a href="#" class="google"><i class="fa fa-google"></i><br><span>Google+</span></a></li>
+              <li><a href="#" class="instagram"><i class="fa fa-instagram"></i><br><span>Instagram</span></a></li>
+              <li><a href="#" class="youtube"><i class="fa fa-youtube"></i><br><span>Youtube</span></a></li>
+              <li><a href="#" class="rss"><i class="fa fa-rss"></i><br><span>RSS</span></a></li>
+            </ul>
+          </div> -->
+          <!-- /social widget -->
+
+          <!-- subscribe widget -->
+          <!-- TODO -->
+          <!-- <div class="widget subscribe-widget">
+            <div class="widget-title">
+              <h2 class="title">Оформить подписку</h2>
+            </div>
+            <form>
+              <input class="input" type="email" placeholder="email">
+              <button class="input-btn">Подписаться</button>
+            </form>
+          </div> -->
+          <!-- /subscribe widget -->
+          <div class="widget-title">
+            <h2 class="title">Избранные статьи</h2>
+          </div>
+
+          <!-- owl carousel 4 -->
+          <div id="owl-carousel-4" class="owl-carousel owl-theme">
+            <!-- ARTICLE -->
+            {{range .TemplateDataArticle.RandomArticles}}
+            <article class="article thumb-article">
+              <div class="article-img">
+                <img src="{{.ImagePath}}" alt="{{.Title}}">
+              </div>
+              <div class="article-body">
+                <ul class="article-info">
+                  <li class="article-category"><a href="/news/{{.Category}}/">{{.Tag}}</a></li>
+                  <li class="article-type"><i class="fa fa-camera"></i></li>
+                </ul>
+                <h2 class="article-title"><a href="/news/{{.Category}}/{{.Href}}/">{{.Title}}</a></h2>
+                <ul class="article-meta">
+                  <li><i class="fa fa-clock-o"></i> {{humanDate .ArticleTime}}</li>
+                  <li><i class="fa fa-comments"></i> {{.Comments}}</li>
+                </ul>
+              </div>
+            </article>
+            {{end}}
+            <!-- /ARTICLES -->
+          </div>
+          <!-- /owl carousel 4 -->
+        </div>
+
+        <div class="widget center-block hidden-xs">
+          <img class="center-block" src="/static/img/ad-1.jpg" alt="">
+        </div>
+        <!-- /article widget -->
+
+        <!-- galery widget -->
+        <div class="widget galery-widget">
+          <div class="widget-title">
+            <h2 class="title">Фотогалерея</h2>
+          </div>
+          <ul>
+            {{range .TemplateDataImages.RandomImages}}
+            <li><a href="#"><img src="{{.ImagePath}}" alt="{{.Alt}}"></a></li>
+            {{end}}
+          </ul>
+        </div>
+        <!-- /galery widget -->
+
+        <!-- tweets widget -->
+        <!-- TODO -->
+        <!-- <div class="widget tweets-widget">
+          <div class="widget-title">
+            <h2 class="title">Недавние твитты</h2>
+          </div>
+          <ul>
+            <li class="tweet">
+              <i class="fa fa-twitter"></i>
+              <div class="tweet-body">
+                <p><a href="#">@magnews</a> Populo tritani laboramus ex mei, no eum iuvaret ceteros euripidis <a
+                    href="#">https://t.co/DwsTbsmxTP</a></p>
+              </div>
+            </li>
+            <li class="tweet">
+              <i class="fa fa-twitter"></i>
+              <div class="tweet-body">
+                <p><a href="#">@magnews</a> Populo tritani laboramus ex mei, no eum iuvaret ceteros euripidis <a
+                    href="#">https://t.co/DwsTbsmxTP</a></p>
+              </div>
+            </li>
+            <li class="tweet">
+              <i class="fa fa-twitter"></i>
+              <div class="tweet-body">
+                <p><a href="#">@magnews</a> Populo tritani laboramus ex mei, no eum iuvaret ceteros euripidis <a
+                    href="#">https://t.co/DwsTbsmxTP</a></p>
+              </div>
+            </li>
+          </ul>
+        </div> -->
+        <!-- /tweets widget -->
+      </div>
+      <!-- /Aside Column -->
+    </div>
+  </div>
+</div>
+<!-- /ALL ARTICLES -->
+
+<!-- /FOOTER -->
+{{end}}
